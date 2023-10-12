@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FacadeService } from 'src/app/services/facade.service';
 declare var $: any;
 
 @Component({
@@ -9,20 +10,44 @@ declare var $: any;
 })
 export class LoginScreenComponent implements OnInit {
 
-  type : String = "password";
+  public type: String = "password";
+  public username: String = "";
+  public password: String = "";
+
+  public errors:any = {};
 
   constructor(
-    private router: Router
+    private router: Router,
+    private facadeService: FacadeService
   ) { }
 
   ngOnInit(): void {
   }
 
-  public login(){
+  public login(): void {
+    // Validar
+    this.errors = this.facadeService.validarLogin(this.username, this.password);
+    
+    if (!$.isEmptyObject(this.errors)) {
+        // Mostrar mensajes de error u otras acciones necesarias
+        return;
+    }
+    
+    // Si pasa la validación, intentar iniciar sesión
+    this.facadeService.login(this.username, this.password).subscribe(
+        (response) => {
+            this.facadeService.saveUserData(response);
+            this.router.navigate(["home"]);
+        },
+        (error) => {
+            alert("No se pudo iniciar sesión");
+        }
+    );
+}
 
-  }
 
-  public goRegistro(){
+  public registrar(){
+
     this.router.navigate(["registro"]);
   }
 
