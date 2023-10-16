@@ -39,3 +39,4 @@
 *.zip
 *.tar.gz
 *.rar
+.angular/cache/
