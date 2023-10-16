@@ -11,5 +11,9 @@ export class HomeScreenComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  //Cerrar sesión
+  public logout(){
+    
+  }
 
 }
