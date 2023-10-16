@@ -1,37 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
 @Component({
   selector: 'app-home-screen',
   templateUrl: './home-screen.component.html',
   styleUrls: ['./home-screen.component.scss']
 })
 export class HomeScreenComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
   public token : string = "";
   public lista_usuarios: any[] = [];
+
+  displayedColumns: string[] = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'edad', 'curp', 'rfc', 'telefono', 'ocupacion', 'editar', 'eliminar'];
+  dataSource = new MatTableDataSource<DatosUsuario>(this.lista_usuarios as DatosUsuario[]);
+
+  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(null!, null!);
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
   
   constructor(
     private facadeService: FacadeService,
@@ -50,7 +40,26 @@ export class HomeScreenComponent implements OnInit {
     }
   }
 
-  
+  //Obtener lista de usuarios
+  public obtenerUsuarios(){
+    this.usuariosService.obtenerListaUsers().subscribe(
+      (response)=>{
+        this.lista_usuarios = response;
+        console.log("Lista users: ", this.lista_usuarios);
+        if(this.lista_usuarios.length > 0){
+          //Agregar datos del nombre e email
+          this.lista_usuarios.forEach(usuario => {
+            usuario.first_name = usuario.user.first_name;
+            usuario.last_name = usuario.user.last_name;
+            usuario.email = usuario.user.email;
+          });
+          this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_usuarios as DatosUsuario[]);
+        }
+      }, (error)=>{
+        alert("No se pudo obtener la lista de usuarios");
+      }
+    );
+  }
   //Cerrar sesión
   public logout(){
     this.facadeService.logout().subscribe(
@@ -63,5 +72,20 @@ export class HomeScreenComponent implements OnInit {
       }
     );
   }
+
+}
+//Esto va fuera de la llave que cierra la clase
+export interface DatosUsuario {
+  id: number,
+  matricula: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  fecha_nacimiento: string,
+  curp: string,
+  rfc: string,
+  edad: number,
+  telefono: string,
+  ocupacion: string
 
 }
