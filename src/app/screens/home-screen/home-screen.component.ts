@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -10,19 +10,19 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
   templateUrl: './home-screen.component.html',
   styleUrls: ['./home-screen.component.scss']
 })
-export class HomeScreenComponent implements OnInit {
-  public token : string = "";
+export class HomeScreenComponent implements OnInit, AfterViewInit {
+  public token: string = "";
   public lista_usuarios: any[] = [];
 
   displayedColumns: string[] = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'edad', 'curp', 'rfc', 'telefono', 'ocupacion', 'editar', 'eliminar'];
   dataSource = new MatTableDataSource<DatosUsuario>(this.lista_usuarios as DatosUsuario[]);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(null!, null!);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-  
+
   constructor(
     private facadeService: FacadeService,
     private usuariosService: UsuariosService,
@@ -30,51 +30,123 @@ export class HomeScreenComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Validar que haya inicio de sesión
-    //Obtengo el token del login
+    // Validar que haya inicio de sesión
+    // Obtengo el token del login
     this.token = this.facadeService.getSessionToken();
     console.log("Token: ", this.token);
-    
-    if(this.token == ""){
+
+    if (this.token == "") {
       this.router.navigate([""]);
     }
+    // Mandar a ejecutar la función
+    this.obtenerUsuarios();
+    //aqui fue donde le movi
+    this.initPaginator();
   }
 
-  //Obtener lista de usuarios
-  public obtenerUsuarios(){
+  // Para paginacion
+  // Paginador para Agentes
+
+  /**
+   * public initPaginator() {
+    this.dataSource.paginator = this.paginator;
+    // Modificar etiquetas del paginador a español
+    this.paginator._intl.itemsPerPageLabel = 'Registros por página';
+    this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+      if (length === 0 || pageSize === 0) {
+        return `0 / ${length}`;
+      }
+      length = Math.max(length, 0);
+      const startIndex = page * pageSize;
+      const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+      return `${startIndex + 1} - ${endIndex} de ${length}`;
+    };
+    this.paginator._intl.firstPageLabel = 'Primera página';
+    this.paginator._intl.lastPageLabel = 'Última página';
+    this.paginator._intl.previousPageLabel = 'Página anterior';
+    this.paginator._intl.nextPageLabel = 'Página siguiente';
+  }
+   * 
+   * 
+   */
+  
+
+
+ //Para paginacion
+  //Paginador para Agentes
+  public initPaginator(){
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      //console.log("Paginator: ", this.dataSourceIngresos.paginator);
+      //Modificar etiquetas del paginador a español
+      this.paginator._intl.itemsPerPageLabel = 'Registros por página';
+      this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+        if (length === 0 || pageSize === 0) {
+          return `0 / ${length}`;
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return `${startIndex + 1} - ${endIndex} de ${length}`;
+      };
+      this.paginator._intl.firstPageLabel = 'Primera página';
+      this.paginator._intl.lastPageLabel = 'Última página';
+      this.paginator._intl.previousPageLabel = 'Página anterior';
+      this.paginator._intl.nextPageLabel = 'Página siguiente';
+    },500);
+    //this.dataSourceIngresos.paginator = this.paginator;
+  }
+
+
+  // Obtener lista de usuarios
+  public obtenerUsuarios() {
     this.usuariosService.obtenerListaUsers().subscribe(
-      (response)=>{
+      (response) => {
         this.lista_usuarios = response;
         console.log("Lista users: ", this.lista_usuarios);
-        if(this.lista_usuarios.length > 0){
-          //Agregar datos del nombre e email
+        if (this.lista_usuarios.length > 0) {
+          // Agregar datos del nombre e email
           this.lista_usuarios.forEach(usuario => {
             usuario.first_name = usuario.user.first_name;
             usuario.last_name = usuario.user.last_name;
             usuario.email = usuario.user.email;
           });
+          console.log("Otro user: ", this.lista_usuarios);
+
           this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_usuarios as DatosUsuario[]);
         }
-      }, (error)=>{
+      }, (error) => {
         alert("No se pudo obtener la lista de usuarios");
       }
     );
   }
-  //Cerrar sesión
-  public logout(){
+
+  // Cerrar sesión
+  public logout() {
     this.facadeService.logout().subscribe(
-      (response)=>{
+      (response) => {
         this.facadeService.destroyUser();
-        //Navega al login
+        // Navega al login
         this.router.navigate(["/"]);
-      }, (error)=>{
+      }, (error) => {
         console.error(error);
       }
     );
   }
 
+  // Funcion para editar
+  public goEditar(idUser: number) {
+
+  }
+
+  // Función para eliminar
+  public delete(idUser: number) {
+
+  }
+
 }
-//Esto va fuera de la llave que cierra la clase
+
+// Esto va fuera de la llave que cierra la clase
 export interface DatosUsuario {
   id: number,
   matricula: number;
@@ -87,5 +159,4 @@ export interface DatosUsuario {
   edad: number,
   telefono: string,
   ocupacion: string
-
 }
