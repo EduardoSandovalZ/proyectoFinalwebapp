@@ -12,7 +12,7 @@
             <div class="body-registro">
                 <mat-form-field class="mat-input" appearance="outline">
                     <mat-label>ID/Matrícula</mat-label>
-                    <input matInput [(ngModel)]="user.matricula" name="id" placeholder="Escribe ID o matrícula">
+                    <input matInput [(ngModel)]="user.matricula" name="id" maxlength="9" placeholder="Escribe ID o matrícula">
                 </mat-form-field>
                 <div *ngIf="errors.matricula" class="invalid-feedback">{{ errors.matricula }}</div>
 
