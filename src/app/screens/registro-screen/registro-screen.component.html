@@ -59,13 +59,13 @@
 
                 <mat-form-field class="mat-input" appearance="outline">
                     <mat-label>CURP</mat-label>
-                    <input matInput [(ngModel)]="user.curp" placeholder="Escribe CURP" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="user.curp" maxlength="18" placeholder="Escribe CURP" style="text-transform: uppercase;">
                 </mat-form-field>
                 <div *ngIf="errors.curp" class="invalid-feedback">{{ errors.curp }}</div>
     
                 <mat-form-field class="mat-input" appearance="outline">
                     <mat-label>RFC</mat-label>
-                    <input matInput [(ngModel)]="user.rfc" placeholder="Escribe RFC" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="user.rfc" maxlength="13" placeholder="Escribe RFC" style="text-transform: uppercase;">
                 </mat-form-field>
                 <div *ngIf="errors.rfc" class="invalid-feedback">{{ errors.rfc }}</div>
     
