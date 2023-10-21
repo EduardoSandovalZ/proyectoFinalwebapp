@@ -88,33 +88,22 @@ export class RegistroScreenComponent implements OnInit, AfterViewInit {
     this.user.fecha_nacimiento = event.value.toISOString().split("T")[0];
     console.log("Fecha: ", this.user.fecha_nacimiento);
   }
-
+  //Funcion para darle el formato deseado a los numeros de telefono
   formatearTelefono() {
-    // Verificar si telefonoInput está definido y tiene un valor
     if (this.telefonoInput && this.telefonoInput.nativeElement && this.telefonoInput.nativeElement.value) {
-      // Obtener el valor actual del elemento input
       const valor = this.telefonoInput.nativeElement.value;
-  
-      // Eliminar todos los caracteres no numéricos
       const valorNumerico = valor.replace(/\D/g, '');
-  
-      // Ajustar el valor al formato correcto
       const formato = "(000) 000-0000";
       let valorFormateado = "";
       let j = 0;
-  
       for (let i = 0; i < formato.length; i++) {
         if (formato[i] === '0') {
-          // Reemplazar '0' con dígitos del valor actual
-          valorFormateado += valorNumerico[j] || ''; // Usar '' si valorNumerico[j] es undefined
+          valorFormateado += valorNumerico[j] || ''; 
           j++;
         } else {
-          // Mantener los caracteres no numéricos
           valorFormateado += formato[i];
         }
       }
-  
-      // Actualizar el valor del modelo
       this.user.telefono = valorFormateado;
     } else {
       console.error('this.telefonoInput, this.telefonoInput.nativeElement o su valor es undefined');
