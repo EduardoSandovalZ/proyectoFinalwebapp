@@ -41,7 +41,7 @@ export class UsuariosService {
   }
 
   //Validación para el formulario
-  public validarUsuario(data: any){
+  public validarUsuario(data: any, editar: boolean){
     console.log("Validando user... ", data);
     let error: any = [];
 
@@ -65,12 +65,15 @@ export class UsuariosService {
       error['email'] = this.errorService.email;
     }
 
-    if(!this.validatorService.required(data["password"])){
-      error["password"] = this.errorService.required;
-    }
-
-    if(!this.validatorService.required(data["confirmar_password"])){
-      error["confirmar_password"] = this.errorService.required;
+    //Checa la bandera de editar si es TRUE
+    if(!editar){
+      if(!this.validatorService.required(data["password"])){
+        error["password"] = this.errorService.required;
+      }
+  
+      if(!this.validatorService.required(data["confirmar_password"])){
+        error["confirmar_password"] = this.errorService.required;
+      }
     }
 
     if(!this.validatorService.required(data["fecha_nacimiento"])){
@@ -99,8 +102,6 @@ export class UsuariosService {
 
     if(!this.validatorService.required(data["edad"])){
       error["edad"] = this.errorService.required;
-    }else if(!this.validatorService.numeric(data["edad"])){
-      alert("El formato es solo números");
     }
 
     if(!this.validatorService.required(data["telefono"])){
@@ -111,7 +112,6 @@ export class UsuariosService {
       error["ocupacion"] = this.errorService.required;
     }
 
-    //Return arreglo
     return error;
   }
 
@@ -126,9 +126,10 @@ export class UsuariosService {
     var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
     return this.http.get<any>(`${environment.url_api}/lista-users/`, {headers:headers});
   }
-  public getUserByID(idUser: number){
+  public getUserByID(idUser: Number){
     return this.http.get<any>(`${environment.url_api}/users/?id=${idUser}`,httpOptions); 
   }
+  
   //Servicio para editar
   public editarUsuario (data: any): Observable <any>{
     var token = this.facadeService.getSessionToken();

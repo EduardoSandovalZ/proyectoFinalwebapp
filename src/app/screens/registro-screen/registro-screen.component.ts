@@ -136,16 +136,85 @@ export class RegistroScreenComponent implements OnInit, AfterViewInit {
       console.error('this.telefonoInput, this.telefonoInput.nativeElement o su valor es undefined');
     }
   }
+  /**
+   * 
+   * public actualizar(){
+    //Validar
+    this.errors = [];
+
+    this.errors = this.usuariosService.validarUsuario(this.user, this.editar);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    console.log("Pasó la validación");
+    
+    // //Mandar a registrar los datos
+    this.usuariosService.editarUsuario(this.user).subscribe(
+     (response)=>{
+       alert("Usuario editado correctamente");
+       console.log("Usuario editado: ", response);
+       //Si se editó, entonces mandar al home
+       this.router.navigate(["home"]);
+     }, (error)=>{
+       alert("No se pudo editar usuario");
+     }
+    );
+ }
+   * 
+   * 
+   */
+
+
+  //Función para editar usuario
+  public actualizar(): boolean {
+    // Validar
+    this.errors = this.usuariosService.validarUsuario(this.user, this.editar);
+    if (!$.isEmptyObject(this.errors)) {
+      return false;
+    }
+    console.log("Pasó la validación");
+    
+    // Mandar a registrar los datos
+    this.usuariosService.editarUsuario(this.user).subscribe(
+      (response) => {
+        alert("Usuario editado correctamente");
+        console.log("Usuario editado: ", response);
+        // Si se editó, entonces mandar al home
+        this.router.navigate(["home"]);
+      },
+      (error) => {
+        alert("No se pudo editar usuario");
+      }
+    );
+  
+    // Devolver true si todo está bien
+    return true;
+  }
+  
+  
+  
 
   public registrar(): Promise<boolean> {
     return new Promise((resolve) => {
       // Validar
       this.errors = [];
 
-      this.errors = this.usuariosService.validarUsuario(this.user);
+      this.errors = this.usuariosService.validarUsuario(this.user, this.editar);
       if (!$.isEmptyObject(this.errors)) {
         resolve(false);
       }
+
+      //Mandar a registrar los datos
+     this.usuariosService.registrarUsuario(this.user).subscribe(
+      (response)=>{
+        alert("Usuario registrado correctamente");
+        console.log("Usuario registrado: ", response);
+        //Si se registró, entonces mandar al login
+        this.router.navigate(["/"]);
+      }, (error)=>{
+        alert("No se pudo registrar usuario");
+      }
+     );
       // Validar la contraseña
       if (this.user.password == this.user.confirmar_password) {
         // Aquí si todo es correcto vamos a registrar - aquí se manda a llamar al servicio
