@@ -136,6 +136,7 @@ export class HomeScreenComponent implements OnInit, AfterViewInit {
 
   // Funcion para editar
   public goEditar(idUser: number) {
+    this.router.navigate(["registro/"+idUser]);
 
   }
 

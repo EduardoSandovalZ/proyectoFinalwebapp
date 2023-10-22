@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 declare var $: any;
@@ -23,9 +24,11 @@ export class RegistroScreenComponent implements OnInit, AfterViewInit {
   // Para detectar errores
   public errors: any = {};
   public datePickerOptions: any;
-
+  public idUser: number = 0;
   constructor(
+    private location: Location,
     private usuariosService: UsuariosService,
+    public activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
 
@@ -33,6 +36,14 @@ export class RegistroScreenComponent implements OnInit, AfterViewInit {
     this.user = this.usuariosService.esquemaUser();
     // Imprimir datos en consola
     console.log("User: ", this.user);
+    if(this.activatedRoute.snapshot.params['id'] != undefined){
+      this.editar = true;
+      //Asignamos a nuestra variable global el valor del ID que viene por la URL
+      this.idUser = this.activatedRoute.snapshot.params['id'];
+      console.log("ID User: ", this.idUser);
+      //Al iniciar la vista obtiene el usuario por su ID
+      this.obtenerUserByID();
+    }
 
     // Configurar rango de fechas permitido
     const currentYear = new Date().getFullYear();
@@ -53,7 +64,23 @@ export class RegistroScreenComponent implements OnInit, AfterViewInit {
   }
 
   public regresar() {
-
+    this.location.back();
+  }
+  //Función para obtener un solo usuario por su ID
+  public obtenerUserByID(){
+    this.usuariosService.getUserByID(this.idUser).subscribe(
+      (response)=>{
+        this.user = response;
+        //Agregamos valores faltantes
+        this.user.first_name = response.user.first_name;
+        this.user.last_name = response.user.last_name;
+        this.user.email = response.user.email;
+        this.user.fecha_nacimiento = response.fecha_nacimiento.split("T")[0];
+        console.log("Datos user: ", this.user);
+      }, (error)=>{
+        alert("No se pudieron obtener los datos del usuario para editar");
+      }
+    );
   }
 
   // Funciones para password

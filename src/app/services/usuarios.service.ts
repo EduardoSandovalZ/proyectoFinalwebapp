@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ValidatorService } from './tools/validator.service';
 import { ErrorsService } from './tools/errors.service';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -16,6 +17,7 @@ export class UsuariosService {
 
   constructor(
     private http: HttpClient,
+    public router: Router,
     private validatorService: ValidatorService,
     private errorService: ErrorsService,
     private facadeService: FacadeService,
@@ -123,5 +125,19 @@ export class UsuariosService {
     var token = this.facadeService.getSessionToken();
     var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
     return this.http.get<any>(`${environment.url_api}/lista-users/`, {headers:headers});
+  }
+  public getUserByID(idUser: number){
+    return this.http.get<any>(`${environment.url_api}/users/?id=${idUser}`,httpOptions); 
+  }
+  //Servicio para editar
+  public editarUsuario (data: any): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.put<any>(`${environment.url_api}/users-edit/`, data, {headers:headers});
+  }
+  public eliminarUsuario(idUser: number): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.delete<any>(`${environment.url_api}/users-edit/?id=${idUser}`,{headers:headers});
   }
 }
