@@ -140,6 +140,9 @@ export class HomeScreenComponent implements OnInit, AfterViewInit {
   irARegistroMateria(): void {
     this.router.navigate(['/registro-materia']);
   }
+  irAListaMaterias(): void {
+    this.router.navigate(['/home-materia-screen']);
+  }
 
   // Funcion para editar
   public goEditar(idUser: number) {
