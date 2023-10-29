@@ -40,6 +40,10 @@ export class ValidatorService {
   numeric(input:any){
     return (!isNaN(parseFloat(input)) && isFinite(input));
   }
+  onlyNumbers(input: string): boolean {
+    const regex = /^[0-9]+$/;
+    return regex.test(input);
+  }
 
   maxDecimals(input:any, size:any) {
     let decimals = 0;

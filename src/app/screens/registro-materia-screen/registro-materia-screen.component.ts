@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { MateriaService } from 'src/app/services/materia.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; 
+import { FacadeService } from 'src/app/services/facade.service';
+import { HttpHeaders } from '@angular/common/http';
 
 
 declare var $: any;
@@ -12,28 +15,54 @@ declare var $: any;
   styleUrls: ['./registro-materia-screen.component.scss']
 })
 export class RegistroMateriaScreenComponent implements OnInit {
+  public token: string = "";
   editar: boolean = false;
   materia: any = {};  // Asegúrate de que esta estructura coincida con tu esquema en MateriaService
   public errors: any = {};
+  formulario!: FormGroup;
   constructor(
     private location: Location,
     private materiaService: MateriaService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private facadeService: FacadeService,
+    private router: Router,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
-    // Inicialización y obtención de datos si es una edición
-    // Utiliza activatedRoute para obtener parámetros de la URL
+    this.token = this.facadeService.getSessionToken();
+
+    // Verificar la existencia del token
+    if (this.token === "") {
+      // Redirigir al inicio de sesión si no hay token
+      this.router.navigate([""]);
+    }
+  
   }
 
   regresar(): void {
     this.location.back();
   }
 
-  registrar(): void {
+  registrarMateria(): void {
+    // Asegúrate de incluir el token en los encabezados
+    var headers = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token 
+    });
+
     // Lógica para registrar la materia
-    // Utiliza materiaService para llamar al servicio de registro
+    this.materiaService.registrarMateria(this.materia, headers).subscribe(
+      (response) => {
+        alert("Materia registrada correctamente");
+        console.log("Materia registrada: ", response);
+        // Si se registró, entonces mandar al home o a donde necesites
+        this.router.navigate(["home"]);
+      },
+      (error) => {
+        alert("No se pudo registrar la materia");
+      }
+    );
   }
 
   actualizar(): void {

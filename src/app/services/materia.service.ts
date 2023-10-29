@@ -42,6 +42,8 @@ export class MateriaService {
 
     if(!this.validatorService.required(data["nrc"])){
       error["nrc"] = this.errorService.required;
+    } else if (!this.validatorService.onlyNumbers(data["nrc"])) {
+      error["nrc"] = "Solo se permiten caracteres numéricos en NRC";
     }
 
     if(!this.validatorService.required(data["name"])){
@@ -50,7 +52,10 @@ export class MateriaService {
 
     if(!this.validatorService.required(data["section"])){
       error["section"] = this.errorService.required;
+    } else if (!this.validatorService.onlyNumbers(data["section"])) {
+      error["section"] = "Solo se permiten caracteres numéricos en Sección";
     }
+
     if(!this.validatorService.required(data["days"])){
       error["days"] = this.errorService.required;
     }
@@ -76,9 +81,10 @@ export class MateriaService {
 
   //Aquí van los servicios HTTP
   // Cambios en las URLs para usar /materia/ en lugar de /users/
-  public registrarMateria(data: any): Observable<any> {
-    return this.http.post<any>(`${environment.url_api}/materia/`, data, httpOptions);
-  }
+  public registrarMateria(data: any, headers: HttpHeaders): Observable<any> {
+    return this.http.post<any>(`${environment.url_api}/materias/`, data, { headers });
+}
+
 
   public obtenerListaMaterias(): Observable<any> {
     var token = this.facadeService.getSessionToken();
