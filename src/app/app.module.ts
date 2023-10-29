@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import {MatTableModule} from '@angular/material/table';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
+import { RegistroMateriaScreenComponent } from './screens/registro-materia-screen/registro-materia-screen.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { EliminarUserModalComponent } from './modals/eliminar-user-modal/elimina
     LoginScreenComponent,
     RegistroScreenComponent,
     HomeScreenComponent,
-    EliminarUserModalComponent
+    EliminarUserModalComponent,
+    RegistroMateriaScreenComponent
   ],
   imports: [
     BrowserModule,
