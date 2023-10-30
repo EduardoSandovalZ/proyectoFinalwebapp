@@ -11,8 +11,9 @@ const routes: Routes = [
   { path: 'registro', component: RegistroScreenComponent, pathMatch: 'full' },
   { path: 'registro/:id', component: RegistroScreenComponent, pathMatch: 'full' },
   { path: 'home', component: HomeScreenComponent, pathMatch: 'full' },
-  { path: 'home-materia-screen', component: HomeMateriaScreenComponent },
-  { path: 'registro-materia', component: RegistroMateriaScreenComponent },
+  { path: 'home-materia-screen', component: HomeMateriaScreenComponent, pathMatch: 'full'  },
+  { path: 'registro-materia', component: RegistroMateriaScreenComponent, pathMatch: 'full'  },
+  { path: 'registro-materia/:id', component: RegistroMateriaScreenComponent, pathMatch: 'full'  },
 
   
 ];

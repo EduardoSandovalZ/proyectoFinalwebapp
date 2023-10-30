@@ -24,6 +24,7 @@ import {MatTableModule} from '@angular/material/table';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
 import { RegistroMateriaScreenComponent } from './screens/registro-materia-screen/registro-materia-screen.component';
 import { HomeMateriaScreenComponent } from './screens/home-materia-screen/home-materia-screen.component';
+import { EliminarMateriaModalComponent } from './modals/eliminar-materia-modal/eliminar-materia-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { HomeMateriaScreenComponent } from './screens/home-materia-screen/home-m
     HomeScreenComponent,
     EliminarUserModalComponent,
     HomeMateriaScreenComponent,
-    RegistroMateriaScreenComponent
+    RegistroMateriaScreenComponent,
+    EliminarMateriaModalComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 import { MateriaService } from 'src/app/services/materia.service';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import { EliminarMateriaModalComponent } from 'src/app/modals/eliminar-materia-modal/eliminar-materia-modal.component';
 @Component({
   selector: 'app-home-materia-screen',
   templateUrl: './home-materia-screen.component.html',
@@ -14,7 +17,7 @@ export class HomeMateriaScreenComponent implements OnInit, AfterViewInit {
   public token: string = "";
   public listaMaterias: DatosMateria[] = [];
 
-  displayedColumns: string[] = ['nrc', 'nombre', 'seccion', 'dias', 'hora_inicio', 'hora_final', 'salon', 'programa_educativo'];
+  displayedColumns: string[] = ['nrc', 'nombre', 'seccion', 'dias', 'hora_inicio', 'hora_final', 'salon', 'programa_educativo', 'editar', 'eliminar'];
   dataSource = new MatTableDataSource<any>(this.listaMaterias);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -24,6 +27,8 @@ export class HomeMateriaScreenComponent implements OnInit, AfterViewInit {
     private materiaService: MateriaService,
     private router: Router,
     private location: Location,
+    private http: HttpClient, 
+    public dialog: MatDialog
   ) { }
 
 
@@ -75,6 +80,36 @@ export class HomeMateriaScreenComponent implements OnInit, AfterViewInit {
   regresar(): void {
     this.location.back();
   }
+
+  // goEditar((idMateria: number)){
+
+  // }
+  // delete((idMateria: number)){
+
+  // }
+  public goEditarMateria(idMateria: number) {
+    this.router.navigate(["registro-materia/"+idMateria]);
+
+  }
+  public deleteMateria(idMateria: number) {
+    const dialogRef = this.dialog.open(EliminarMateriaModalComponent,{
+      data: {id: idMateria},
+      height: '268px',
+      width: '328px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Materia eliminado");
+        window.location.reload();
+      }else{
+        console.log("No se eliminó la materia");
+        //alert("No se eliminó el usuario");
+      }
+    });
+
+  }
+  
 }
 export interface DatosMateria {
   id: number,
