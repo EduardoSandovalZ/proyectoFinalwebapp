@@ -26,6 +26,9 @@ import { RegistroMateriaScreenComponent } from './screens/registro-materia-scree
 import { HomeMateriaScreenComponent } from './screens/home-materia-screen/home-materia-screen.component';
 import { EliminarMateriaModalComponent } from './modals/eliminar-materia-modal/eliminar-materia-modal.component';
 
+
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +36,7 @@ import { EliminarMateriaModalComponent } from './modals/eliminar-materia-modal/e
     RegistroScreenComponent,
     HomeScreenComponent,
     EliminarUserModalComponent,
+    EliminarMateriaModalComponent,
     HomeMateriaScreenComponent,
     RegistroMateriaScreenComponent,
     EliminarMateriaModalComponent
@@ -50,7 +54,10 @@ import { EliminarMateriaModalComponent } from './modals/eliminar-materia-modal/e
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    ReactiveFormsModule
+    
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},

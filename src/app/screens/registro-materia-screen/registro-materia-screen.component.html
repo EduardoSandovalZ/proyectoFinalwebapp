@@ -53,9 +53,13 @@
                 
                     <mat-form-field class="mat-input" appearance="outline">
                         <mat-label>Programa Educativo</mat-label>
-                        <input matInput [(ngModel)]="materia.programa_educativo" placeholder="Escribe programa educativo">
+                        <mat-select [(ngModel)]="materia.programa_educativo" placeholder="Selecciona un programa educativo">
+                            <mat-option value="Ingeniería en Ciencias de la Computación">Ingeniería en Ciencias de la Computación</mat-option>
+                            <mat-option value="Licenciatura en Ciencias de la Computación">Licenciatura en Ciencias de la Computación</mat-option>
+                            <mat-option value="Ingeniería en Tecnologías de la Información">Ingeniería en Tecnologías de la Información</mat-option>
+                          </mat-select>                          
                     </mat-form-field>
-                    <div *ngIf="errors.programa_educativo" class="invalid-feedback">{{ errors.programa_educativo }}</div>
+                      
                 
                     <div class="section-buttons">
                         <button class="btn btn-danger" (click)="regresar()">Cancelar</button>
@@ -68,7 +72,7 @@
                 <!-- Usa [(ngModel)] para enlazar los campos con las propiedades de tu componente -->
             </div>
             <div class="section-buttons">
-                <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="actualizar()">Actualizar</button>
+                <!-- <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="actualizar()">Actualizar</button> -->
             </div>
         </div>
     </div>

@@ -30,6 +30,7 @@ export class RegistroMateriaScreenComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.materia.programa_educativo = '';
     this.token = this.facadeService.getSessionToken();
 
     // Verificar la existencia del token
@@ -45,6 +46,10 @@ export class RegistroMateriaScreenComponent implements OnInit {
   }
 
   registrarMateria(): void {
+    if (!this.materia.programa_educativo) {
+      alert('Por favor, selecciona un programa educativo');
+      return;
+    }
     // Asegúrate de incluir el token en los encabezados
     var headers = new HttpHeaders({ 
         'Content-Type': 'application/json',
@@ -64,10 +69,4 @@ export class RegistroMateriaScreenComponent implements OnInit {
       }
     );
   }
-
-  actualizar(): void {
-    // Lógica para actualizar la materia
-    // Utiliza materiaService para llamar al servicio de actualización
-  }
-
 }
