@@ -136,34 +136,6 @@ export class RegistroScreenComponent implements OnInit, AfterViewInit {
       console.error('this.telefonoInput, this.telefonoInput.nativeElement o su valor es undefined');
     }
   }
-  /**
-   * 
-   * public actualizar(){
-    //Validar
-    this.errors = [];
-
-    this.errors = this.usuariosService.validarUsuario(this.user, this.editar);
-    if(!$.isEmptyObject(this.errors)){
-      return false;
-    }
-    console.log("Pasó la validación");
-    
-    // //Mandar a registrar los datos
-    this.usuariosService.editarUsuario(this.user).subscribe(
-     (response)=>{
-       alert("Usuario editado correctamente");
-       console.log("Usuario editado: ", response);
-       //Si se editó, entonces mandar al home
-       this.router.navigate(["home"]);
-     }, (error)=>{
-       alert("No se pudo editar usuario");
-     }
-    );
- }
-   * 
-   * 
-   */
-
 
   //Función para editar usuario
   public actualizar(): boolean {

@@ -18,6 +18,7 @@ export class HomeMateriaScreenComponent implements OnInit, AfterViewInit {
   public listaMaterias: DatosMateria[] = [];
 
   displayedColumns: string[] = ['nrc', 'nombre', 'seccion', 'dias', 'hora_inicio', 'hora_final', 'salon', 'programa_educativo', 'editar', 'eliminar'];
+
   dataSource = new MatTableDataSource<any>(this.listaMaterias);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -44,6 +44,7 @@
                         <input matInput [(ngModel)]="materia.hora_final" placeholder="Escribe hora final">
                     </mat-form-field>
                     <div *ngIf="errors.hora_final" class="invalid-feedback">{{ errors.hora_final }}</div>
+                      
                 
                     <mat-form-field class="mat-input" appearance="outline">
                         <mat-label>Salón</mat-label>
@@ -63,7 +64,9 @@
                 
                     <div class="section-buttons">
                         <button class="btn btn-danger" (click)="regresar()">Cancelar</button>
-                        <button class="btn btn-primary" type="submit" (click)="registrarMateria()">Registrar Materia</button>
+                        <button *ngIf="!editar" class="btn btn-primary" type="submit" (click)="registrarMateria()">Registrar Materia</button>
+                        <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="actualizarMateria()">Actualizar</button>
+                    
                     </div>
                 </div>
                 

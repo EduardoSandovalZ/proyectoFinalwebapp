@@ -57,6 +57,20 @@
                             <th mat-header-cell *matHeaderCellDef> Programa educativo </th>
                             <td mat-cell *matCellDef="let element"> {{element.programa_educativo}} </td>
                         </ng-container>
+
+                        <ng-container matColumnDef="editar">
+                            <th mat-header-cell *matHeaderCellDef> Actualizar </th>
+                            <td mat-cell *matCellDef="let element" class="td-editar">
+                                <i class="bi bi-pencil-square" (click)="goEditarMateria(element.id)"></i> 
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="eliminar">
+                            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                            <td mat-cell *matCellDef="let element" class="td-eliminar"> 
+                                <i class="bi bi-trash3-fill" (click)="deleteMateria(element.id)"></i>
+                            </td>
+                        </ng-container>
             
                         <!-- Añade más columnas según las propiedades de tu clase Materia -->
             

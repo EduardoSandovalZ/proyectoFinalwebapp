@@ -36,7 +36,7 @@ export class MateriaService {
     }
   }
 
-  public validarateria(data: any, editar: boolean){
+  public validarMateria(data: any, editar: boolean){
     console.log("Validando materia... ", data);
     let error: any = [];
 
@@ -74,6 +74,9 @@ export class MateriaService {
 
     if(!this.validatorService.required(data["programa"])){
       error["programa"] = this.errorService.required;
+    }
+    if (!editar) {
+      // Agrega aquí las validaciones específicas para la creación si es necesario
     }
 
     return error;

@@ -29,6 +29,11 @@ import { EliminarMateriaModalComponent } from './modals/eliminar-materia-modal/e
 
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { EditarMateriaModalComponent } from './modals/editar-materia-modal/editar-materia-modal.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +44,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     EliminarMateriaModalComponent,
     HomeMateriaScreenComponent,
     RegistroMateriaScreenComponent,
-    EliminarMateriaModalComponent
+    EliminarMateriaModalComponent,
+    EditarMateriaModalComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +62,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatDialogModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MtxDatetimepickerModule,
+    NgxMaterialTimepickerModule
     
   ],
   providers: [
