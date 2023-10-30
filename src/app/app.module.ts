@@ -23,6 +23,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import {MatTableModule} from '@angular/material/table';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
 import { RegistroMateriaScreenComponent } from './screens/registro-materia-screen/registro-materia-screen.component';
+import { HomeMateriaScreenComponent } from './screens/home-materia-screen/home-materia-screen.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { RegistroMateriaScreenComponent } from './screens/registro-materia-scree
     RegistroScreenComponent,
     HomeScreenComponent,
     EliminarUserModalComponent,
+    HomeMateriaScreenComponent,
     RegistroMateriaScreenComponent
   ],
   imports: [
