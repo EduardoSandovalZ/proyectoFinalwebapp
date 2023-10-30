@@ -66,6 +66,8 @@ export class RegistroMateriaScreenComponent implements OnInit {
     this.location.back();
   }
   public obtenerMateriaPorId(): void {
+    this.token = this.facadeService.getSessionToken();
+    this.materia = this.materiaService.esquemaMateria();
     this.materiaService.getMateriaByID(this.idMateria).subscribe(
       (response) => {
         this.materia = response;
@@ -93,6 +95,10 @@ export class RegistroMateriaScreenComponent implements OnInit {
       return false;
     }
     console.log("Pasó la validación");
+    var headers = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.token 
+    });
     
     // Mandar a registrar los datos
     this.materiaService.editarMateria(this.materia).subscribe(

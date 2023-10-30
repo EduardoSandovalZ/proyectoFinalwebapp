@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { EliminarMateriaModalComponent } from 'src/app/modals/eliminar-materia-modal/eliminar-materia-modal.component';
+import { EditarMateriaModalComponent } from 'src/app/modals/editar-materia-modal/editar-materia-modal.component';
 @Component({
   selector: 'app-home-materia-screen',
   templateUrl: './home-materia-screen.component.html',
@@ -89,9 +90,26 @@ export class HomeMateriaScreenComponent implements OnInit, AfterViewInit {
 
   // }
   public goEditarMateria(idMateria: number) {
-    this.router.navigate(["registro-materia/"+idMateria]);
+    const dialogRef = this.dialog.open(EditarMateriaModalComponent,{
+      data: {id: idMateria},
+      height: '268px',
+      width: '328px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(["registro-materia/"+idMateria]);
+      if(result && result.isEdited){
+        console.log("Materia Editada");
+        window.location.reload();
+      }else{
+        
+        console.log("No se edito la materia");
+        //alert("No se eliminó el usuario");
+      }
+    });
+    
 
   }
+
   public deleteMateria(idMateria: number) {
     const dialogRef = this.dialog.open(EliminarMateriaModalComponent,{
       data: {id: idMateria},
