@@ -19,12 +19,12 @@ export class EditarMateriaModalComponent {
     this.dialogRef.close({isDelete:false});
   }
   public editarMateria(){
-    this.materiaServices.editarMateria(this.data.id).subscribe(
+    this.materiaServices.getMateriaByID(this.data.id).subscribe(
       (response) => {
         console.log(response);
         this.dialogRef.close({isDelete:true});
       },(error)=>{
-        alert("Materia no editada "+ error);
+        alert("Prueba "+ error);
         this.dialogRef.close({isDelete:false});
       }
     );
