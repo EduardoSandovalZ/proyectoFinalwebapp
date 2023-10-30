@@ -95,9 +95,15 @@ export class MateriaService {
     return this.http.get<any>(`${environment.url_api}/lista-materias/`, { headers: headers });
   }
 
+  // En MateriaService
   public getMateriaByID(idMateria: number): Observable<any> {
-    return this.http.get<any>(`${environment.url_api}/materias/?id=${idMateria}`, httpOptions);
+    const token = this.facadeService.getSessionToken();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    
+    return this.http.get<any>(`${environment.url_api}/materias-details/?id=${idMateria}`, { headers });
   }
+
+
 
   public editarMateria(data: any): Observable<any> {
     var token = this.facadeService.getSessionToken();

@@ -42,12 +42,12 @@ export class RegistroMateriaScreenComponent implements OnInit {
       this.router.navigate([""]);
     }
     // Verificar si es una edición
-    console.log("User: ", this.materia);
+    console.log("Materia: ", this.materia);
     if(this.activatedRoute.snapshot.params['id'] != undefined){
       this.editar = true;
       //Asignamos a nuestra variable global el valor del ID que viene por la URL
       this.idMateria = this.activatedRoute.snapshot.params['id'];
-      console.log("ID User: ", this.idMateria);
+      console.log("ID Materia: ", this.idMateria);
       //Al iniciar la vista obtiene el usuario por su ID
       this.obtenerMateriaPorId();
     }
@@ -68,6 +68,7 @@ export class RegistroMateriaScreenComponent implements OnInit {
   public obtenerMateriaPorId(): void {
     this.token = this.facadeService.getSessionToken();
     this.materia = this.materiaService.esquemaMateria();
+    
     this.materiaService.getMateriaByID(this.idMateria).subscribe(
       (response) => {
         this.materia = response;
@@ -78,7 +79,7 @@ export class RegistroMateriaScreenComponent implements OnInit {
         this.materia.hora_inicio = response.hora_inicio;
         this.materia.hora_final = response.hora_final;
         this.materia.programa_educativo = response.programa_educativo;
-        // ... Agrega otras propiedades necesarias
+        // ... Agrega otras propiedades
   
         console.log("Datos de la materia: ", this.materia);
       },
@@ -87,6 +88,7 @@ export class RegistroMateriaScreenComponent implements OnInit {
       }
     );
   }
+  
   
   public actualizarMateria(): boolean {
     // Validar
