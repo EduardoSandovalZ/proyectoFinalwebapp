@@ -78,7 +78,7 @@ export class MateriaService {
     if (!editar) {
       // Agrega aquí las validaciones específicas para la creación si es necesario
     }
-
+    console.log(error);
     return error;
   }
 
@@ -108,7 +108,7 @@ export class MateriaService {
   public editarMateria(data: any): Observable<any> {
     var token = this.facadeService.getSessionToken();
     var headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
-    return this.http.put<any>(`${environment.url_api}/materias-edit/`, data, { headers: headers });
+    return this.http.put<any>(`${environment.url_api}/materias-edit/?id=${data.id}`, data, { headers: headers });
   }
 
   public eliminarMateria(idMateria: number): Observable<any> {

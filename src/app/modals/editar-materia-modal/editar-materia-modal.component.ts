@@ -19,7 +19,7 @@ export class EditarMateriaModalComponent {
     this.dialogRef.close({isDelete:false});
   }
   public editarMateria(){
-    this.materiaServices.editarMateria(this.data.id).subscribe(
+    this.materiaServices.editarMateria(this.data).subscribe(
       (response) => {
         console.log(response);
         this.dialogRef.close({isDelete:true});

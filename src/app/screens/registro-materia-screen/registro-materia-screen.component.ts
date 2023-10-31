@@ -101,24 +101,48 @@ export class RegistroMateriaScreenComponent implements OnInit {
     this.element = data;
   }
   
-  public goEditarMateria(id: any) {
-    const dialogRef = this.dialog.open(EditarMateriaModalComponent,{
-      data: {id: id},
-      height: '268px',
-      width: '328px',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(["registro-materia/"+id]);
-      if(result && result.isEdited){
-        console.log("Materia Editada");
-        window.location.reload();
-      }else{
+  // public goEditarMateria(id: any) {
+  //   const dialogRef = this.dialog.open(EditarMateriaModalComponent,{
+  //     data: {id: id},
+  //     height: '268px',
+  //     width: '328px',
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     this.router.navigate(["registro-materia/"+id]);
+  //     if(result && result.isEdited){
+  //       console.log("Materia Editada");
+  //       window.location.reload();
+  //     }else{
         
-        console.log("No se edito la materia");
-        //alert("No se eliminó el usuario");
-      }
-    });
+  //       console.log("No se edito la materia");
+  //       //alert("No se eliminó el usuario");
+  //     }
+  //   });
     
+
+  // }
+  public goEditarMateria(): boolean {
+    this.errors = []
+    if (!$.isEmptyObject(this.errors)) {
+      return false;
+    }
+    console.log("Pasó la validación");
+    
+    // Mandar a registrar los datos
+    this.materiaService.editarMateria(this.materia).subscribe(
+      (response) => {
+        alert("Usuario editado correctamente");
+        console.log("Usuario editado: ", response);
+        // Si se editó, entonces mandar al home
+        this.router.navigate(["home"]);
+      },
+      (error) => {
+        alert("No se pudo editar usuario");
+      }
+    );
+  
+    // Devolver true si todo está bien
+    return true;
 
   }
 
