@@ -78,6 +78,8 @@ export class RegistroMateriaScreenComponent implements OnInit {
     });
   }
 
+  
+
   regresar(): void {
     this.location.back();
   }
@@ -92,8 +94,8 @@ export class RegistroMateriaScreenComponent implements OnInit {
         this.materia.nombre = response.nombre;
         this.materia.salon = response.salon;
         this.materia.dias = response.dias;
-        this.materia.hora_inicio = response.hora_inicio;
-        this.materia.hora_final = response.hora_final;
+        this.materia.hora_inicio = response.hora_inicio.split(':').splice(0,2).join(':');
+        this.materia.hora_final = response.hora_final.split(':').splice(0,2).join(':');
         this.materia.programa_educativo = response.programa_educativo;
         // ... Agrega otras propiedades
   

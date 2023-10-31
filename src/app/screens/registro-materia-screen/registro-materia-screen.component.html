@@ -37,7 +37,7 @@
                     
                     <mat-form-field class="" appearance="outline">
                         <mat-label>Hora de inicio</mat-label>
-                        <input matInput [ngxTimepicker]="picker" [(ngModel)]="materia.hora_inicio" [format]="24" placeholder="Escribe hora de inicio">
+                        <input matInput [ngxTimepicker]="picker" [(ngModel)]="materia.hora_inicio" [format]="24"  placeholder="Escribe hora de inicio">
                         <ngx-material-timepicker #picker></ngx-material-timepicker>
                       </mat-form-field>
                     <div *ngIf="errors.hora_inicio" class="invalid-feedback">{{ errors.hora_inicio }}</div>
