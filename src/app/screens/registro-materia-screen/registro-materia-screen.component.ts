@@ -122,7 +122,7 @@ export class RegistroMateriaScreenComponent implements OnInit {
 
   // }
   public goEditarMateria(): boolean {
-    this.errors = []
+    this.errors = this.materiaService.validarMateria(this.materia, this.editar);
     if (!$.isEmptyObject(this.errors)) {
       return false;
     }
