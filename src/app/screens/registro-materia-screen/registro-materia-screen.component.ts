@@ -2,14 +2,14 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; 
 import { HttpHeaders } from '@angular/common/http';
 import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {NgxMaterialTimepickerComponent, NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 import { MateriaService } from 'src/app/services/materia.service';
-import { Location } from '@angular/common';
+import { Location, formatDate } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { EliminarMateriaModalComponent } from 'src/app/modals/eliminar-materia-modal/eliminar-materia-modal.component';
@@ -31,6 +31,8 @@ export class RegistroMateriaScreenComponent implements OnInit {
   public errors: any = {};
   formulario!: FormGroup;
   public idMateria: number = 0;
+  @ViewChild('picker')
+  picker!: NgxMaterialTimepickerComponent;
   constructor(
     private location: Location,
     private materiaService: MateriaService,
@@ -62,6 +64,11 @@ export class RegistroMateriaScreenComponent implements OnInit {
     }
     
   
+  }
+
+  onHoraInicioSet(event: any): void {
+    // Aquí, event es la hora seleccionada en el formato 'HH:mm:ss'
+    this.materia.hora_inicio = event;
   }
   inicializarFormulario(): void {
     this.formulario = this.fb.group({
@@ -122,7 +129,7 @@ export class RegistroMateriaScreenComponent implements OnInit {
 
   // }
   public goEditarMateria(): boolean {
-    this.errors = this.materiaService.validarMateria(this.materia, this.editar);
+    
     if (!$.isEmptyObject(this.errors)) {
       return false;
     }
@@ -145,6 +152,16 @@ export class RegistroMateriaScreenComponent implements OnInit {
     return true;
 
   }
+
+  formatearHora(hora: string): string {
+    const date = new Date();
+    const [hours, minutes] = hora.split(':');
+    date.setHours(Number(hours));
+    date.setMinutes(Number(minutes));
+
+    return formatDate(date, 'hh:mm a', 'en-US');
+  }
+
 
   registrarMateria(): void {
     if (!this.materia.programa_educativo) {

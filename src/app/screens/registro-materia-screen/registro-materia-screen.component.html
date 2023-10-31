@@ -10,9 +10,10 @@
             </div>
             <div class="body-registro">
                 <div class="body-registro">
+                    
                     <mat-form-field class="mat-input" appearance="outline">
                         <mat-label>NRC</mat-label>
-                        <input matInput [(ngModel)]="materia.nrc" maxlength="10" placeholder="Escribe NRC">
+                        <input matInput [(ngModel)]="materia.nrc" maxlength="5" placeholder="Escribe NRC">
                     </mat-form-field>
                     <div *ngIf="errors.nrc" class="invalid-feedback">{{ errors.nrc }}</div>
                     <mat-form-field class="mat-input" appearance="outline">
@@ -32,18 +33,27 @@
                         <input matInput [(ngModel)]="materia.dias" placeholder="Escribe días">
                     </mat-form-field>
                     <div *ngIf="errors.dias" class="invalid-feedback">{{ errors.dias }}</div>
-                
-                    <mat-form-field class="mat-input" appearance="outline">
+                    
+                    
+                    <mat-form-field class="" appearance="outline">
                         <mat-label>Hora de inicio</mat-label>
-                        <input matInput [(ngModel)]="materia.hora_inicio" placeholder="Escribe hora de inicio">
-                    </mat-form-field>
+                        <input matInput [ngxTimepicker]="picker" [(ngModel)]="materia.hora_inicio" [format]="24" placeholder="Escribe hora de inicio">
+                        <ngx-material-timepicker #picker></ngx-material-timepicker>
+                      </mat-form-field>
                     <div *ngIf="errors.hora_inicio" class="invalid-feedback">{{ errors.hora_inicio }}</div>
-                
-                    <mat-form-field class="mat-input" appearance="outline">
+                      
+                    
+                    
+                    
+                    
+                    <mat-form-field class="" appearance="outline">
                         <mat-label>Hora final</mat-label>
-                        <input matInput [(ngModel)]="materia.hora_final" placeholder="Escribe hora final">
-                    </mat-form-field>
+                        <input matInput [ngxTimepicker]="pickerFinal" [(ngModel)]="materia.hora_final" [format]="24"  placeholder="Escribe hora final">
+                        <ngx-material-timepicker #pickerFinal></ngx-material-timepicker>
+                      </mat-form-field>
                     <div *ngIf="errors.hora_final" class="invalid-feedback">{{ errors.hora_final }}</div>
+                
+                    
                       
                 
                     <mat-form-field class="mat-input" appearance="outline">
@@ -61,13 +71,13 @@
                           </mat-select>                          
                     </mat-form-field>
                       
-                
                     <div class="section-buttons">
                         <button class="btn btn-danger" (click)="regresar()">Cancelar</button>
                         <button *ngIf="!editar" class="btn btn-primary" type="submit" (click)="registrarMateria()">Registrar Materia</button>
                         <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="goEditarMateria()">Actualizar</button>
 
                     </div>
+                    
                 </div>
                 
                 <!-- Agrega tus campos de formulario aquí -->

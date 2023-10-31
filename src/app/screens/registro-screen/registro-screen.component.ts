@@ -136,6 +136,7 @@ export class RegistroScreenComponent implements OnInit, AfterViewInit {
       console.error('this.telefonoInput, this.telefonoInput.nativeElement o su valor es undefined');
     }
   }
+  
 
   //Función para editar usuario
   public actualizar(): boolean {
