@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { EliminarMateriaModalComponent } from 'src/app/modals/eliminar-materia-modal/eliminar-materia-modal.component';
 import { EditarMateriaModalComponent } from 'src/app/modals/editar-materia-modal/editar-materia-modal.component';
+import { ModificarMateriaModalComponent } from 'src/app/modals/modificar-materia-modal/modificar-materia-modal.component';
 @Component({
   selector: 'app-home-materia-screen',
   templateUrl: './home-materia-screen.component.html',
@@ -90,7 +91,7 @@ export class HomeMateriaScreenComponent implements OnInit, AfterViewInit {
 
   // }
   public goEditarMateria(idMateria: number) {
-    const dialogRef = this.dialog.open(EditarMateriaModalComponent,{
+    const dialogRef = this.dialog.open(ModificarMateriaModalComponent,{
       data: {id: idMateria},
       height: '268px',
       width: '328px',

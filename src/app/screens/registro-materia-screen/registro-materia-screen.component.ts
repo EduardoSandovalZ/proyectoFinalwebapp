@@ -1,12 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { MateriaService } from 'src/app/services/materia.service';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; 
-import { FacadeService } from 'src/app/services/facade.service';
 import { HttpHeaders } from '@angular/common/http';
 import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FacadeService } from 'src/app/services/facade.service';
+import { MateriaService } from 'src/app/services/materia.service';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import { EliminarMateriaModalComponent } from 'src/app/modals/eliminar-materia-modal/eliminar-materia-modal.component';
+import { EditarMateriaModalComponent } from 'src/app/modals/editar-materia-modal/editar-materia-modal.component';
 
 
 declare var $: any;
@@ -17,6 +24,7 @@ declare var $: any;
   styleUrls: ['./registro-materia-screen.component.scss']
 })
 export class RegistroMateriaScreenComponent implements OnInit {
+  element: any;
   public token: string = "";
   editar: boolean = false;
   materia: any = {};  // Asegúrate de que esta estructura coincida con tu esquema en MateriaService
@@ -29,7 +37,8 @@ export class RegistroMateriaScreenComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private facadeService: FacadeService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -88,35 +97,29 @@ export class RegistroMateriaScreenComponent implements OnInit {
       }
     );
   }
+  setElementData(data: any) {
+    this.element = data;
+  }
   
-  
-  public actualizarMateria(): boolean {
-    // Validar
-    this.errors = this.materiaService.validarMateria(this.materia, this.editar);
-    if (!$.isEmptyObject(this.errors)) {
-      return false;
-    }
-    console.log("Pasó la validación");
-    var headers = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.token 
+  public goEditarMateria(id: any) {
+    const dialogRef = this.dialog.open(EditarMateriaModalComponent,{
+      data: {id: id},
+      height: '268px',
+      width: '328px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(["registro-materia/"+id]);
+      if(result && result.isEdited){
+        console.log("Materia Editada");
+        window.location.reload();
+      }else{
+        
+        console.log("No se edito la materia");
+        //alert("No se eliminó el usuario");
+      }
     });
     
-    // Mandar a registrar los datos
-    this.materiaService.editarMateria(this.materia).subscribe(
-      (response) => {
-        alert("Materia editada correctamente");
-        console.log("Materia editada: ", response);
-        // Si se editó, entonces mandar al home
-        this.router.navigate(["home"]);
-      },
-      (error) => {
-        alert("No se pudo editar usuario");
-      }
-    );
-  
-    // Devolver true si todo está bien
-    return true;
+
   }
 
   registrarMateria(): void {

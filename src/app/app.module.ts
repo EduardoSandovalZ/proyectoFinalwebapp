@@ -33,6 +33,7 @@ import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { EditarMateriaModalComponent } from './modals/editar-materia-modal/editar-materia-modal.component';
+import { ModificarMateriaModalComponent } from './modals/modificar-materia-modal/modificar-materia-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { EditarMateriaModalComponent } from './modals/editar-materia-modal/edita
     HomeMateriaScreenComponent,
     RegistroMateriaScreenComponent,
     EliminarMateriaModalComponent,
-    EditarMateriaModalComponent
+    EditarMateriaModalComponent,
+    ModificarMateriaModalComponent
   ],
   imports: [
     BrowserModule,

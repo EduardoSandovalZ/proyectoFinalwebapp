@@ -65,8 +65,9 @@
                     <div class="section-buttons">
                         <button class="btn btn-danger" (click)="regresar()">Cancelar</button>
                         <button *ngIf="!editar" class="btn btn-primary" type="submit" (click)="registrarMateria()">Registrar Materia</button>
-                        <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="actualizarMateria()">Actualizar</button>
-                    
+                        <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="goEditarMateria(element.id)">Actualizar</button>
+                        <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="goEditarMateria(element.id)">Actualizar</button>
+
                     </div>
                 </div>
                 
